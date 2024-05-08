@@ -6,6 +6,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	role: 0,
 	hasPrefix: false,
+	usePrefix:false,
 	credits: "Eugene Aguilar",
 	description: "Upload an image to imgur",
 	commandCategory: "tools",

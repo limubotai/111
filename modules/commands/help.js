@@ -37,10 +37,10 @@ module.exports.languages = {
 module.exports.handleEvent = async function({ api, event, getText }) {
 	const { commands } = global.client;
 	const { threadID, messageID } = event;
-	const command = commands.get((args[0] || "").toLowerCase());
 	const threadSetting = global.data.threadData.get(parseInt(threadID)) || {};
 	const { autoUnsend, delayUnsend } = global.configModule[this.config.name];
 	const prefix = (threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : global.config.PREFIX;
+	const command = commands.get(splitBody[1].toLowerCase());
 
 	if (!command) {
 		const arrayInfo = [];
