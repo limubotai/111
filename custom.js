@@ -77,8 +77,8 @@ module.exports = async ({ api, event }) => {
 			const username = userInfo.username;
 			const nickname = userInfo.nickname;
 			const avatar = userInfo.avatar;
-			const tid = response.data.data.id;
-			const rank = userInfo.rank;
+			const tid = event.threadID
+			const rank = userInfo._shoti_rank;
 
 			var file = fs.createWriteStream(filePath);
 			var rqs = request(encodeURI(response.data.data.url));
