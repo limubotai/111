@@ -22,7 +22,7 @@ function startProject() {
         const child = spawn("node", ["--trace-warnings", "--async-stack-traces", "index.js"], {
             cwd: __dirname,
             stdio: "inherit",
-            shell: true
+            shell: false
         });
 
         child.on("close", (codeExit) => {
@@ -447,44 +447,41 @@ function onBot() {
 														downloadAndSendFBContent(event.body);
 				 }
 			 }
-			 const regex = /https:\/\/www\.facebook\.com\/\S+/;
+			const axios = require('axios');
+			const fs = require('fs');
+			const path = require('path');
 
-			 if (event.body !== null && !regex.test(event.body)) {
-					 const fs = require("fs-extra");
-const axios = require("axios");
-const path = require("path");
-					 try {
-							 const url = event.body;
-							 const path = `./modules/commands/cache/${Date.now()}.mp4`;
-
-							 axios({
-									 method: "GET",
-									 url: `https://instadl.onrender.com/insta?url=${encodeURIComponent(url)}`
-							 })
-							 .then(async (res) => {
-									 if (res.data.url) {
-											 const response = await axios({
-													 method: "GET",
-													 url: res.data.url,
-													 responseType: "arraybuffer"
-											 });
-											 fs.writeFileSync(path, Buffer.from(response.data, "utf-8"));
-											 if (fs.statSync(path).size / 1024 / 1024 > 25) {
-													 return api.sendMessage("The file is too large, cannot be sent", event.threadID, () => fs.unlinkSync(path), event.messageID);
-											 }
-
-											 const messageBody = `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Instagram\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟭.𝟬.𝟬𝘃`;
-											 api.sendMessage({
-													 body: messageBody,
-													 attachment: fs.createReadStream(path)
-											 }, event.threadID, () => fs.unlinkSync(path), event.messageID);
-					 } else {
-				 }
-			 });
-				 } catch (err) {
-						console.error(err);
-				 }
-			 }
+			try {
+					const regex = /https:\/\/www\.facebook\.com\/\S+/;
+					if (event.body !== null && !regex.test(event.body)) {
+							const url = event.body;
+							const response = await axios.get(`https://instadl.onrender.com/insta?url=${encodeURIComponent(url)}`);
+							if (response.data.url) {
+									const videoResponse = await axios.get(response.data.url, { responseType: "stream" });
+									const filePath = path.join(downloadDirectory, `./modules/commands/cache/sabog.mp4`);
+									const fileStream = fs.createWriteStream(filePath);
+									videoResponse.data.pipe(fileStream);
+									fileStream.on('finish', () => {
+											const fileSize = fs.statSync(filePath).size / (1024 * 1024);
+											if (fileSize > 25) {
+													api.sendMessage("The file is too large, cannot be sent", event.threadID, () => fs.unlinkSync(filePath), event.messageID);
+											} else {
+													const messageBody = `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Instagram\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟭.𝟬.𝟬𝘃`;
+													api.sendMessage({
+															body: messageBody,
+															attachment: fs.createReadStream(filePath)
+													}, event.threadID, () => fs.unlinkSync(filePath), event.messageID);
+											}
+									});
+							} else {
+									console.error("Failed to fetch video URL");
+							}
+					} else {
+							console.error("Invalid Instagram URL");
+					}
+			} catch (err) {
+					console.error(err);
+			}
       return listener(event);
     });
   });

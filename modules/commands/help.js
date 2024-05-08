@@ -35,12 +35,16 @@ module.exports.languages = {
 };
 
 module.exports.handleEvent = async function({ api, event, getText }) {
+	if (!(event.body.indexOf("help") === 0 || event.body.indexOf("Help") === 0)) return;
+	const args = event.body.split(/\s+/);
+	args.shift();
+
 	const { commands } = global.client;
 	const { threadID, messageID } = event;
+	const command = commands.get((args[0] || "").toLowerCase());
 	const threadSetting = global.data.threadData.get(parseInt(threadID)) || {};
 	const { autoUnsend, delayUnsend } = global.configModule[this.config.name];
 	const prefix = (threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : global.config.PREFIX;
-	const command = commands.get(splitBody[1].toLowerCase());
 
 	if (!command) {
 		const arrayInfo = [];
