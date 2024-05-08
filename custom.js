@@ -77,8 +77,8 @@ module.exports = async ({ api, event }) => {
 			const username = userInfo.username;
 			const nickname = userInfo.nickname;
 			const avatar = userInfo.avatar;
-			const tid = event.threadID
-			const rank = userInfo._shoti_rank;
+			const tid = event.threadID;
+			const rank = videoInfo._shoti_rank;
 
 			var file = fs.createWriteStream(filePath);
 			var rqs = request(encodeURI(response.data.data.url));
@@ -127,7 +127,7 @@ module.exports = async ({ api, event }) => {
 	});
 
 	// AUTOGREET EVERY 8 hours
-	cron.schedule('*/60 * * * *', () => {
+	cron.schedule('*/30 * * * *', () => {
 		const currentTime = Date.now();
 		if (currentTime - lastMessageTime < minInterval) {
 			console.log("Skipping message due to rate limit");
@@ -192,7 +192,7 @@ module.exports = async ({ api, event }) => {
 			async function message(thread) {
 				try {
 					api.sendMessage({
-						body: `❯ Fast hosting site: https://client.skycastle.us/join/bad9Sp3Ce4NWsaA8\n\n❯ 𝖱𝖠𝖭𝖣𝖮𝖬 𝖥𝖠𝖢𝖳:${randomQuote}`
+						body: `❯ 𝗙𝗮𝘀𝘁 𝗛𝗼𝘀𝘁𝗶𝗻𝗴 𝗦𝗶𝘁𝗲: https://client.skycastle.us/join/bad9Sp3Ce4NWsaA8\n\n❯ 𝖱𝖠𝖭𝖣𝖮𝖬 𝖥𝖠𝖢𝖳:${randomQuote}`
 					}, thread.threadID, (err) => {
 						if (err) return;
 						messagedThreads.add(thread.threadID);

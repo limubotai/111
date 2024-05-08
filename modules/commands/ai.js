@@ -7,6 +7,8 @@ module.exports.config = {
 		description: "This module provides AI-powered responses using GPT-3.",
 		usage: "<question>",
 		cooldowns: 5,
+	usePrefix: false,
+	  hasPermission: 0,
 	  usages: "<question>",
 		cooldown: 5,
 	 commandCategory: "gpt4",
