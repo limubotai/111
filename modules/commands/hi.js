@@ -18,7 +18,7 @@ const config = {
 		credits: "Prince Osorio",
 		description: "hi with sticker",
 	commandCategory: "no prefix",
-		usePrefix: false,
+		usePrefix: true,
 		 hasPermission: 0,
 		aliases: [],
 		usages: "",

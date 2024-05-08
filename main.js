@@ -384,9 +384,153 @@ function onBot() {
         return process.exit(0);
       }
 			if (event.body !== null) {
+				if (event.logMessageType === "log:subscribe") {
+								const request = require("request");
+
+			 const autofont = {
+			sansbold: {
+			a: "𝗮", b: "𝗯", c: "𝗰", d: "𝗱", e: "𝗲", f: "𝗳", g: "𝗴", h: "𝗵", i: "𝗶",
+			j: "𝗷", k: "𝗸", l: "𝗹", m: "𝗺", n: "𝗻", o: "𝗼", p: "𝗽", q: "𝗾", r: "𝗿",
+			s: "𝘀", t: "𝘁", u: "𝘂", v: "𝘃", w: "𝘄", x: "𝘅", y: "𝘆", z: "𝘇",
+			A: "𝗔", B: "𝗕", C: "𝗖", D: "𝗗", E: "𝗘", F: "𝗙", G: "𝗚", H: "𝗛", I: "𝗜",
+			J: "𝗝", K: "𝗞", L: "𝗟", M: "𝗠", N: "𝗡", O: "𝗢", P: "𝗣", Q: "𝗤", R: "𝗥",
+			S: "𝗦", T: "𝗧", U: "𝗨", V: "𝗩", W: "𝗪", X: "𝗫", Y: "𝗬", Z: "𝗭",
+			" ": " "
+			},
+			};
+
+			const textToAutofont = (text, font) => {
+			const convertedText = [...text].map(char => font[char] || char).join("");
+			return convertedText;
+			};
+			const modifiedBotName = textToAutofont(botName, autofont.sansbold);
+
+			const ju = textToAutofont(adminName, autofont.sansbold);
+
+			const luh = textToAutofont(prefix, autofont.sansbold);
+								const moment = require("moment-timezone");
+					const { commands } = global.client;
+								var thu = moment.tz('Asia/Manila').format('dddd');
+								if (thu == 'Sunday') thu = 'Sunday'
+								if (thu == 'Monday') thu = 'Monday'
+								if (thu == 'Tuesday') thu = 'Tuesday'
+								if (thu == 'Wednesday') thu = 'Wednesday'
+								if (thu == "Thursday") thu = 'Thursday'
+								if (thu == 'Friday') thu = 'Friday'
+								if (thu == 'Saturday') thu = 'Saturday'
+								const time = moment.tz("Asia/Manila").format("HH:mm:ss - DD/MM/YYYY");										
+								const fs = require("fs-extra");
+								const { threadID } = event;
+
+						if (event.logMessageData.addedParticipants && Array.isArray(event.logMessageData.addedParticipants) && event.logMessageData.addedParticipants.some(i => i.userFbId == userid)) {
+						api.changeNickname(`》 ${global.config.PREFIX} 《 ❃ ➠ ${global.config.BOTNAME}`, threadID, api.getCurrentUserID);
+
+			let gifUrls = [
+			'https://i.imgur.com/bf7bJM5.mp4',
+			'https://i.imgur.com/KaFREOI.mp4',
+			'https://i.imgur.com/lrS3hJF.mp4',
+			'https://i.imgur.com/9eNBFxt.mp4',
+			'https://i.imgur.com/lmVFT8X.mp4',
+			'https://i.imgur.com/MYZdl8Z.mp4',
+			'https://i.imgur.com/1PqqNqr.mp4',
+			'https://i.imgur.com/ytDThi8.mp4',
+			'https://i.imgur.com/209z0iM.mp4',
+			'https://i.imgur.com/VTZWEmH.mp4',
+			'https://i.imgur.com/FO3UI1c.mp4',
+			'https://i.imgur.com/X34qKhJ.mp4',
+			'https://i.imgur.com/WK22w8v.mp4',
+			'https://i.imgur.com/tvVDuo6.mp4',
+			'https://i.imgur.com/3tgiqQd.mp4',
+			'https://i.imgur.com/AfkKH9h.mp4',
+			'https://i.imgur.com/wIGJBXq.mp4',
+			'https://i.imgur.com/lmMWsR8.mp4',
+			'https://i.imgur.com/x0c92nj.mp4'
+			];
+
+			let randomIndex = Math.floor(Math.random() * gifUrls.length);
+			let gifUrl = gifUrls[randomIndex];
+			let gifPath = __dirname + '/cache/connected.mp4';
+
+			axios.get(gifUrl, { responseType: 'arraybuffer' })
+			.then(response => {           fs.writeFileSync(gifPath, response.data); 
+					return api.sendMessage("𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗡𝗚...", event.threadID, () => 
+   api.sendMessage({ 
+    body: `🔴🟢🟡\n\n✅ 𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗘𝗗 𝗦𝗨𝗖𝗖𝗘𝗦! \n\n➭ BotName: ${global.config.BOTNAME}\n➭ Bot Prefix: ⟨${global.config.PREFIX}⟩\n➭ Admin: ⟨${global.config.BOTOWNER}⟩\n➭ Ownerlink: ‹${global.config.OWNERLINK}›\n➭ Version: ${global.config.version}\n➭ Current Commands: ${commands.size}\n➭ Use ${global.config.PREFIX}help to view command details\n➭ Added bot at: ⟨ ${time} ⟩〈 ${thu} 〉`, 
+    attachment: fs.createReadStream(gifPath)
+			}, event.threadID)
+							);
+					})
+								.catch(error => {
+										console.error(error);
+								});
+													} else {
+														try {
+															const fs = require("fs-extra");
+															let { threadName, participantIDs } = await api.getThreadInfo(threadID);
+
+															var mentions = [], nameArray = [], memLength = [], userID = [], i = 0;
+
+															let addedParticipants1 = event.logMessageData.addedParticipants;
+															for (let newParticipant of addedParticipants1) {
+																let userID = newParticipant.userFbId;
+																api.getUserInfo(parseInt(userID), (err, data) => {
+																	if (err) { return console.log(err); }
+																	var obj = Object.keys(data);
+																	var userName = data[obj].name.replace("@", "");
+																	if (userID !== api.getCurrentUserID()) {
+
+																		nameArray.push(userName);
+																		mentions.push({ tag: userName, id: userID, fromIndex: 0 });
+
+																		memLength.push(participantIDs.length - i++);
+																		memLength.sort((a, b) => a - b);
+
+																			(typeof threadID.customJoin == "undefined") ? msg = "🌟 Hi!, {uName}\n┌────── ～●～ ──────┐\n----- Welcome to {threadName} -----\n└────── ～●～ ──────┘\nYou're the {soThanhVien} member of this group, please enjoy! 🥳♥" : msg = threadID.customJoin;
+																			msg = msg
+																				.replace(/\{uName}/g, nameArray.join(', '))
+																				.replace(/\{type}/g, (memLength.length > 1) ? 'you' : 'Friend')
+																				.replace(/\{soThanhVien}/g, memLength.join(', '))
+																				.replace(/\{threadName}/g, threadName);
+
+								const bayot = [
+								'https://i.ibb.co/0jfD13g/5bf47044-0957-4f8a-a166-9bca3f4aa7cd.jpg',
+								'https://i.ibb.co/jhgc8Kj/ad523982-a45e-41db-836c-f76b5aaa4f9c.jpg',
+								'https://i.ibb.co/vwMwRkn/aa13cba8-1c81-4062-87d0-272fcaf88212.jpg',
+								'https://i.ibb.co/HC9wQVT/351c6943-dd38-4833-a1af-f06dafa4277f.jpg',
+			'https://i.ibb.co/mNGVcRM/Background-Designs-de-Rise-of-the-Teenage-Mutant-Ninja-Turtles-THECAB.jpg','https://i.ibb.co/vwm61bY/Download-Dark-Purple-vector-background-with-bent-lines-for-free.jpg','https://i.ibb.co/JqgvGBX/Free-Photo-Liquid-marbling-paint-texture-background-fluid-painting-abstract-texture-intensive-color.jp','https://i.ibb.co/HHHSWH4/36bc2c91-1426-44d9-9895-331c346aed0d.jpg','https://i.ibb.co/pPpGL7r/205-Amazing-Collections-of-Purple-Backgrounds.jpg','https://i.ibb.co/mBCcYvM/purple-smoke.jpg','https://i.ibb.co/zbfdqvZ/Purple-Butterflies.jpg','https://i.ibb.co/yXdBMkN/Rivet2.jpg','https://i.ibb.co/Pmd696Z/486dfd3c-2cd3-4db3-b29d-c64ffa124cc6.jpg','https://i.ibb.co/CWzCxZ5/Abstract-Wings.jpg'
+								];
+								const sheshh = bayot[Math.floor(Math.random() * bayot.length)];
+
+								const lubot = [
+								'https://i.postimg.cc/wTZdtnfG/0.jpg',
+								'https://i.postimg.cc/15wZqJkR/b05ee5c9-a589-4a47-a939-32ffde9280b3.jpg',
+								'https://i.postimg.cc/wxRCCwT5/1.jpg',
+								'https://i.postimg.cc/Cx5H2QwS/0767d076-eda6-4fab-b31e-6e93fb3b3db2.jpg',
+								'https://i.postimg.cc/DwSL64cz/3d9e75fe-fb1b-45f2-b3d1-090188d35594.jpg',
+								'https://i.postimg.cc/N0J0zdfq/jah200x.jpg',
+								'https://i.postimg.cc/wBZpNZjv/knitemarshall.jpg',
+			'https://i.postimg.cc/BQkcdCbF/55e5604c-25ca-4a76-8468-726be51ced5b.jpg','https://i.postimg.cc/BZwxKCxz/3a80d8ad-a30c-4665-a9c8-18e3e1539da5.jpg','https://i.postimg.cc/VkP0qZ5K/cali.jpg','https://i.postimg.cc/DyrLM399/50633291-fb17-4d7a-a1e1-767b48304d59.jpg','https://i.postimg.cc/tCcQw8Fz/4200dc41-7ad5-42ed-a046-686a198a3a3e.jpg','https://i.postimg.cc/T2W4hhbn/nat.jpg','https://i.postimg.cc/QdnQpJGC/31ea87b6-b00b-4b93-81e3-8fd36dc27d43.jpg','https://i.postimg.cc/c1bdGKSY/1cf63eb5-fd2a-42f7-a8d8-38ecf65f67fe.jpg','https://i.postimg.cc/9fgcXz7v/grp-icon.jpg','https://i.postimg.cc/TYxv6nsK/divkjta-2.jpg','https://i.postimg.cc/wMHfSQBH/port-for-boys.jpg','https://i.postimg.cc/pVZqm8Th/RPW-port-girl.jpg','https://i.postimg.cc/Jh0G5fcC/save-follow.jpg','https://i.postimg.cc/R0tjBCwT/divkjta-1.jpg','https://i.postimg.cc/Vvb8d9C3/image.jpg','https://i.postimg.cc/pV8VVxJy/ANIME-MOUTH-GIRL.jpg','https://i.postimg.cc/mDYnqd7Z/divkjta.jpg','https://i.postimg.cc/Gp0qCFL4/isienvh.jpg','https://i.postimg.cc/FR6YMZvq/isol.jpg','https://i.postimg.cc/3wcph7Cn/noah-beck.jpg','https://i.postimg.cc/BvLbxFHB/154debb7-6545-4b4f-a887-02770a152558.jpg','https://i.postimg.cc/C14gDMP4/9ec8f4b2-2cff-47ba-bf05-3d83022070ea.jpg','https://i.postimg.cc/rpXXPR7J/lvrhn.jpg'
+								];
+								const yawa = lubot[Math.floor(Math.random() * lubot.length)];
+
+																			let callback = function() {
+																				return api.sendMessage({ body: msg, attachment: fs.createReadStream(__dirname + `/cache/come.jpg`), mentions }, event.threadID, () => fs.unlinkSync(__dirname + `/cache/come.jpg`))
+																			};
+																		request(encodeURI(`https://api.popcat.xyz/welcomecard?background=${sheshh}&text1=${userName}&text2=Welcome+To+${threadName}&text3=You+Are+The${participantIDs.length}th+Member&avatar=${yawa}`)).pipe(fs.createWriteStream(__dirname + `/cache/come.jpg`)).on("close", callback);
+																									}
+																								})
+																							}
+																						} catch (err) {
+																							return console.log("ERROR: " + err);
+												}
+											 }
+											}
+											}
+			
+			if (event.body !== null) {
 				 const regEx_tiktok = /https:\/\/(www\.|vt\.)?tiktok\.com\//;
 				 const link = event.body;
-														if (regEx_tiktok.test(link)) {
+			if (regEx_tiktok.test(link)) {
 															api.setMessageReaction("🚀", event.messageID, () => { }, true);
 															axios.post(`https://www.tikwm.com/api/`, {
 																url: link
@@ -451,10 +595,10 @@ function onBot() {
 			 if (event.body !== null && !regex.test(event.body)) {
 					 const fs = require("fs-extra");
 					 const axios = require("axios");
-					 const path = requre("path");
+					 const path = require("path");
 					 try {
 							 const url = event.body;
-							 const path = `.modules/commands/cache/bayot.mp4`;
+							 const path = `./modules/commands/cache/bayot.mp4`;
 
 							 axios({
 									 method: "GET",

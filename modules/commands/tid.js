@@ -7,7 +7,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "NTKhang & Yan Maglinte", // Added a function to get ThreadImage
 	description: "Get box id and group image",
-	usePrefix: true,
+	usePrefix: false,
 	commandCategory: "group",
 	usages: "tid",
 	cooldowns: 5

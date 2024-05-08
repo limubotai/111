@@ -8,14 +8,12 @@ module.exports.config = {
 cooldowns: 0,
 cooldown: 0,
 hasPrefix: false,
-	usePrefix: false,
-	commandCategory: "music",
-hasPermission: 0,
+usePrefix: false,
+	commandCategory: ".",
 usage: "{pn} search music",
-	usages: "{pn} search music",
 };
 
-module.exports .run = async ({ api, event }) => {
+module.exports.run = async ({ api, event }) => {
  const axios = require("axios");
  const fs = require("fs-extra");
  const ytdl = require("@distube/ytdl-core");
