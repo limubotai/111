@@ -50,6 +50,7 @@
     "pastebin-api": "^7.0.0",
     "path": "^0.12.7",
     "pidusage": "^3.0.2",
+    "prodia.js": "^3.0.0",
     "request": "^2.88.2",
     "semver": "^7.6.1",
     "simple-youtube-api": "^5.2.1",
