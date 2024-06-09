@@ -5,7 +5,7 @@ module.exports.config = {
 	name: "help",
 	version: "1.0.2",
 	hasPermssion: 0,
-	credits: "Mirai Team",
+	credits: "Mirai Team",//modify by cliff
 	description: "Beginner's Guide",
 	commandCategory: "system",
 	usages: "[command]",

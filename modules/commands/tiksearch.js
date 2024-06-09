@@ -27,7 +27,7 @@ module.exports.run = async function({ api, event, args }) {
 
 		api.sendMessage("⏱️ | Searching, please wait...", event.threadID);
 
-		const response = await axios.get(`https://69070.replit.app/tiksearch?search=${encodeURIComponent(searchQuery)}`);
+		const response = await axios.get(`http://158.101.198.227:8609/tiksearch?search=${encodeURIComponent(searchQuery)}`);
 		const videos = response.data.data.videos;
 
 		if (!videos || videos.length === 0) {

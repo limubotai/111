@@ -447,8 +447,8 @@ function onBot() {
 														downloadAndSendFBContent(event.body);
 				 }
 			 }
-			 const regex = /https:\/\/www\.facebook\.com\/\S+/;
-			 if (event.body !== null && !regex.test(event.body)) {
+			  const regex = /https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+\/\?igsh=[a-zA-Z0-9_=-]+$/;
+            if (regex.test(event.body)) {
 					 const fs = require("fs-extra");
 					 const axios = require("axios");
 					 const path = require("path");
@@ -458,16 +458,15 @@ function onBot() {
 
 							 axios({
 									 method: "GET",
-									 url: `https://instadl.onrender.com/insta?url=${encodeURIComponent(url)}`
+									 url: `https://ccprojectapis.osc-fr1.scalingo.io/api/fbdl?url=${encodeURIComponent(url)}`
 							 })
 							 .then(async (res) => {
-									 if (res.data.url) {
+									 if (res.data.url.data[0].url) {
 											 const response = await axios({
 													 method: "GET",
-													 url: res.data.url,
+													 url: res.data.url.data[0].url,
 													 responseType: "arraybuffer"
-											 });
-											 fs.writeFileSync(path, Buffer.from(response.data, "utf-8"));
+											 });									 fs.writeFileSync(path, Buffer.from(response.data, "utf-8"));
 											 if (fs.statSync(path).size / 1024 / 1024 > 25) {
 													 return api.sendMessage("The file is too large, cannot be sent", event.threadID, () => fs.unlinkSync(path), event.messageID);
 											 }
@@ -487,7 +486,7 @@ function onBot() {
 			return listener(event);
 		});
 	});
-}
+};
 
 // ___END OF EVENT & API USAGE___ //
 

@@ -48,9 +48,9 @@ module.exports.run = async function({ api, event }) {
 	if (Object.keys(event.mentions).length === 0) {
 		if (event.messageReply) {
 			const senderID = event.messageReply.senderID;
-			return api.sendMessage(senderID, event.threadID);
+			return api.shareContact(senderID, event.threadID);
 		} else {
-			return api.sendMessage(`${event.senderID}`, event.threadID, event.messageID);
+			return api.shareContact(`${event.senderID}`, event.threadID);
 		}
 	} else {
 		for (const mentionID in event.mentions) {

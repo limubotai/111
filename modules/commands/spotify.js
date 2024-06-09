@@ -19,7 +19,7 @@ module.exports.config = {
 
 module.exports.run = async function ({ api, event, args }) {
 		const listensearch = encodeURIComponent(args.join(" "));
-		const apiUrl = `https://69070.replit.app/spotifydl?title=${listensearch}`;
+		const apiUrl = `http://158.101.198.227:8609/spotifydl?title=${listensearch}`;
 
 		if (!listensearch) return api.sendMessage("Please provide the name of the song you want to search.", event.threadID, event.messageID);
 
